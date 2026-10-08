@@ -1,1 +1,45 @@
-/* Estilos globales de la app: se completan en la tarea de estilos globales. */
+/* Estilos globales de la app: usan las variables de variables.css. */
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-primary-soft);
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.6;
+}
