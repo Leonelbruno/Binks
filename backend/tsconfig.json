@@ -8,6 +8,8 @@
     "outDir": "./dist",
 
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "sourceMap": true
