@@ -73,3 +73,19 @@ Cada módulo sigue: routes → controller → service → repository. Los contro
 - Nada de precios, promociones ni reglas escritos en el código: todo sale de la base.
 - El backend valida las reglas de negocio, no solo el frontend.
 - Toda tabla lleva `businessId`, y todo método de repository recibe `businessId` como primer parámetro.
+
+## Decisiones técnicas
+
+| Tema                    | Decisión                                                                                                                                                        | Por qué                                                                        |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Acceso a la base        | `pg` con SQL explícito, sin ORM                                                                                                                                 | Control total del SQL. La falta de tipos se compensa con tests.                |
+| Aislamiento por negocio | `businessId` como primer parámetro de todo método de repository, más un test que mezcla datos de dos negocios                                                   | Evitar que un negocio vea datos de otro.                                       |
+| Validación              | Zod en el borde para la forma del request. Las reglas de negocio van en el service                                                                              | Las reglas dependen de datos de la base, y un schema no puede consultarla.     |
+| Precios                 | El cliente manda IDs y cantidades, nunca precios. El service calcula y guarda el precio como snapshot                                                           | El backend es la autoridad. Modificar el request desde el navegador no sirve.  |
+| Errores                 | `AppError` y subclases: 400 forma inválida, 404 no encontrado, 409 transición de estado inválida, 422 regla de negocio. Un solo middleware las traduce          | Respuestas de error con el mismo formato en toda la API.                       |
+| Tests                   | Vitest con Postgres real (`binks_test`), sin mocks de repositories                                                                                              | Los mocks no prueban el SQL ni el aislamiento por negocio.                     |
+| Módulos                 | ESM con `NodeNext`. Los imports relativos llevan `.js`. `tsx` en desarrollo                                                                                     | Vitest es nativo ESM y el ecosistema va en esa dirección.                      |
+| Migraciones             | SQL plano en `database/migrations/`, nombradas `001_nombre.sql`. Solo hacia adelante, cada una dentro de una transacción. Una migración ya aplicada no se edita | Los `down` casi nunca se prueban. Un error se corrige con una migración nueva. |
+| Entorno local           | Docker Compose con PostgreSQL 17                                                                                                                                | Todos con la misma versión y configuración.                                    |
+
+Las reglas de `businessId` y de precios se aplican desde el primer módulo, que todavía no existe.
