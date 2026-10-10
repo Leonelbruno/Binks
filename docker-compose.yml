@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: binks-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: binks
+      POSTGRES_PASSWORD: binks
+      POSTGRES_DB: binks
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - binks-pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U binks -d binks"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  binks-pgdata:
