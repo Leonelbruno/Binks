@@ -1,5 +1,5 @@
 import { afterAll, describe, expect, it } from "vitest";
-import { checkDatabase, closeDatabase, pool } from "./database.js";
+import { checkDatabase, closeDatabase, pool } from "../../src/config/database.js";
 
 describe("database", () => {
   afterAll(async () => {

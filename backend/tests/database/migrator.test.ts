@@ -3,9 +3,9 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { Pool } from "pg";
 import { afterAll, afterEach, beforeEach, describe, expect, it } from "vitest";
-import { closeDatabase, pool as adminPool } from "../config/database.js";
-import { env } from "../config/env.js";
-import { runMigrations } from "./migrator.js";
+import { closeDatabase, pool as adminPool } from "../../src/config/database.js";
+import { env } from "../../src/config/env.js";
+import { runMigrations } from "../../src/database/migrator.js";
 
 let schema: string;
 let dir: string;

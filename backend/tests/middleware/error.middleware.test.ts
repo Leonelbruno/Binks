@@ -2,11 +2,11 @@ import express from "express";
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
 import { z } from "zod";
-import { errorMiddleware, notFoundMiddleware } from "./error.middleware.js";
+import { errorMiddleware, notFoundMiddleware } from "../../src/middleware/error.middleware.js";
 import {
   BusinessRuleError,
   InvalidStateTransitionError,
-} from "../shared/errors/AppError.js";
+} from "../../src/shared/errors/AppError.js";
 
 function buildApp() {
   const app = express();
