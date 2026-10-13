@@ -1,3 +1,76 @@
-/* Variables globales (colores, espacios, bordes, sombras): se completan en la tarea de estilos globales. */
+/*
+  Variables globales del diseño (colores, espacios, bordes, sombras, etc.).
+  Los colores son aproximados, sacados de la maqueta de Caja.
+  Cuando tengamos los valores exactos del Figma, se cambian acá y se actualiza toda la app.
+*/
+
 :root {
+  /* Marca */
+  --color-primary: #ef6b30;
+  --color-primary-hover: #dc5a20;
+  --color-primary-soft: #fde8df;
+  --color-cream: #ffeec5;
+
+  /* Estados */
+  --color-success: #4ba06c;
+  --color-success-soft: #e3f3ea;
+  --color-danger: #d64545;
+  --color-danger-soft: #fbe7e7;
+  --color-warning: #e0a030;
+
+  /* Fondos y superficies */
+  --color-bg: #fdfcfa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #fbfbfb;
+
+  /* Texto y bordes */
+  --color-text: #2b2420;
+  --color-text-muted: #817768;
+  --color-text-on-primary: #ffffff;
+  --color-border: #ece8e1;
+  --color-border-strong: #d9d3c8;
+
+  /* Tipografía */
+  --font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Espacios */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  /* Bordes redondeados */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgb(43 36 32 / 8%);
+  --shadow-md: 0 4px 12px rgb(43 36 32 / 10%);
+  --shadow-lg: 0 12px 32px rgb(43 36 32 / 14%);
+
+  /* Medidas del layout */
+  --header-height: 3.5rem;
+  --sidebar-width: 20rem;
+
+  /* Capas */
+  --z-header: 10;
+  --z-drawer: 20;
+  --z-modal: 30;
+
+  /* Transiciones */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
 }
