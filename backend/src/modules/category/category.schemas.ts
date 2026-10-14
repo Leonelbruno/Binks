@@ -1,8 +1,5 @@
 import { z } from "zod";
-
-const POSTGRES_INT_MAX = 2_147_483_647;
-
-const idSchema = z.coerce.number().int().positive().max(POSTGRES_INT_MAX);
+import { POSTGRES_INT_MAX, idSchema } from "../../shared/validation/ids.js";
 
 export const businessParamsSchema = z.object({
   businessId: idSchema,
