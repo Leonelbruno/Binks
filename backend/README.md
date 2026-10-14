@@ -32,13 +32,14 @@ Si algo ya usa alguno de esos puertos, Docker o la API no arrancan. Revisalo con
 
 ## Scripts
 
-| Comando             | Qué hace                                     |
-| ------------------- | -------------------------------------------- |
-| `npm run dev`       | Levanta la API con recarga automática        |
-| `npm run build`     | Compila a `dist/` (sin los tests)            |
-| `npm start`         | Corre lo compilado                           |
-| `npm run typecheck` | Revisa los tipos sin generar archivos        |
-| `npm test`          | Corre los tests (necesita la base encendida) |
+| Comando             | Qué hace                                                                  |
+| ------------------- | ------------------------------------------------------------------------- |
+| `npm run dev`       | Levanta la API con recarga automática                                     |
+| `npm run build`     | Compila a `dist/` (sin los tests)                                         |
+| `npm start`         | Corre lo compilado                                                        |
+| `npm run typecheck` | Revisa los tipos sin generar archivos                                     |
+| `npm test`          | Corre los tests (necesita la base encendida)                              |
+| `npm run seed`      | Carga datos ficticios de desarrollo (idempotente; no corre en producción) |
 
 ## Base de datos
 
