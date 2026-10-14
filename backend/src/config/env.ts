@@ -6,6 +6,15 @@ const envSchema = z.object({
     .enum(["development", "test", "production"])
     .default("development"),
   PORT: z.coerce.number().int().positive().default(3000),
+  CORS_ORIGIN: z
+    .string()
+    .default("http://localhost:5173")
+    .transform((value) =>
+      value
+        .split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean),
+    ),
   DATABASE_URL: z.string().min(1, "DATABASE_URL es obligatoria"),
 });
 
