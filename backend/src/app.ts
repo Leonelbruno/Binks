@@ -6,6 +6,7 @@ import {
   notFoundMiddleware,
 } from "./middleware/error.middleware.js";
 import { env } from "./config/env.js";
+import { apiRouter } from "./routes.js";
 
 export const app = express();
 
@@ -29,5 +30,6 @@ app.get("/api/health/db", async (_req, res) => {
   }
 });
 
+app.use("/api", apiRouter);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

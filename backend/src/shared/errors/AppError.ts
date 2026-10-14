@@ -33,3 +33,9 @@ export class BusinessRuleError extends AppError {
     super(message, 422, "BUSINESS_RULE_VIOLATION", details);
   }
 }
+
+export class ConflictError extends AppError {
+  constructor(message: string, details?: unknown) {
+    super(message, 409, "CONFLICT", details);
+  }
+}
