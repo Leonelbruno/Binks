@@ -5,10 +5,11 @@ import {
   errorMiddleware,
   notFoundMiddleware,
 } from "./middleware/error.middleware.js";
+import { env } from "./config/env.js";
 
 export const app = express();
 
-app.use(cors());
+app.use(cors({ origin: env.CORS_ORIGIN }));
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
