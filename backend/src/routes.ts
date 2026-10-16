@@ -21,10 +21,16 @@ import { createProductVariantRepository } from "./modules/product-variant/produc
 import { createProductVariantRouter } from "./modules/product-variant/product-variant.routes.js";
 import { createProductVariantService } from "./modules/product-variant/product-variant.service.js";
 
+import { createCatalogController } from "./modules/catalog/catalog.controller.js";
+import { createCatalogRepository } from "./modules/catalog/catalog.repository.js";
+import { createCatalogRouter } from "./modules/catalog/catalog.routes.js";
+import { createCatalogService } from "./modules/catalog/catalog.service.js";
+
 const businesses = createBusinessRepository(pool);
 const categories = createCategoryRepository(pool);
 const products = createProductRepository(pool);
 const variants = createProductVariantRepository(pool);
+const catalog = createCatalogRepository(pool);
 
 const businessService = createBusinessService({ businesses });
 const businessController = createBusinessController(businessService);
@@ -34,6 +40,14 @@ const categoryService = createCategoryService({
   categories,
 });
 const categoryController = createCategoryController(categoryService);
+
+const catalogService = createCatalogService({
+  businesses,
+  catalog,
+});
+
+const catalogController =
+  createCatalogController(catalogService);
 
 const productService = createProductService({
   businesses,
@@ -69,6 +83,11 @@ apiRouter.use(
 apiRouter.use(
   "/businesses/:businessId/products",
   createProductRouter(productController),
+);
+
+apiRouter.use(
+  "/businesses/:businessId/catalog",
+  createCatalogRouter(catalogController),
 );
 
 apiRouter.use(
