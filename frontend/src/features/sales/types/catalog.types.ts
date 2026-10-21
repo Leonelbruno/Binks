@@ -24,7 +24,3 @@ export type CatalogCategory = {
 export type Catalog = {
     categories: CatalogCategory[]
 }
-
-export type CatalogResponse = {
-    data: Catalog
-}
