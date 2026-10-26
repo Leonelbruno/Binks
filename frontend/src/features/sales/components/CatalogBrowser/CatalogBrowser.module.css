@@ -1,0 +1,78 @@
+.catalog {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  min-width: 0;
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.breadcrumbs li + li::before {
+  content: '/';
+  margin-right: var(--space-2);
+}
+
+.breadcrumbs a {
+  display: inline-block;
+  padding: var(--space-3) var(--space-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.grid, .variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  min-height: 64px;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+}
+
+.variants {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.variants legend {
+  margin-bottom: var(--space-3);
+}
+
+.variants .card {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.variants input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+}
+
+.selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}

@@ -1,6 +1,5 @@
 import type { ApiErrorBody, ApiResponse } from '../types/api'
-
-const BASE_URL: string = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
+import { apiUrl } from '../config/api'
 
 // Error que lanza el cliente cuando el backend responde con error
 // o cuando no se puede conectar con él.
@@ -36,10 +35,14 @@ async function request<T>(
   path: string,
   { body, signal }: RequestOptions = {},
 ): Promise<T> {
+  if (apiUrl === null) {
+    throw new ApiError(0, 'CONFIGURATION_ERROR', 'La URL de la API no está configurada correctamente')
+  }
+
   let response: Response
 
   try {
-    response = await fetch(`${BASE_URL}${path}`, {
+    response = await fetch(`${apiUrl}${path}`, {
       method,
       headers: body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
       body: body !== undefined ? JSON.stringify(body) : undefined,

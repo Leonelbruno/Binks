@@ -53,3 +53,30 @@
   flex: 1;
   padding: var(--space-5);
 }
+
+/* Mantiene el menú existente accesible en pantallas angostas. */
+@media (max-width: 768px) {
+  .header {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-2) var(--space-3) 0;
+  }
+
+  .nav {
+    overflow-x: auto;
+    gap: var(--space-4);
+    min-width: 0;
+  }
+
+  .link {
+    flex-shrink: 0;
+    min-height: 44px;
+  }
+
+  .content {
+    min-width: 0;
+    padding: var(--space-4);
+  }
+}
