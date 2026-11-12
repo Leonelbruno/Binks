@@ -2,8 +2,19 @@ import { apiUrl } from '../../../shared/config/api'
 import { ApiError } from '../../../shared/services/api'
 import CatalogBrowser from '../components/CatalogBrowser/CatalogBrowser'
 import CatalogFeedback from '../components/CatalogFeedback/CatalogFeedback'
+import CurrentOrderPanel from '../components/CurrentOrderPanel/CurrentOrderPanel'
 import { businessId } from '../config/business'
 import { useCatalog } from '../hooks/useCatalog'
+import type { CartItem } from '../types/cart.types'
+import styles from './SalesPage.module.css'
+
+// TODO: reemplazar por el estado real del pedido actual (carrito) y sus acciones.
+// Mientras tanto, el panel recibe un pedido vacío y acciones que no hacen nada.
+const emptyOrder: CartItem[] = []
+
+function noop() {
+  // Sin lógica de carrito todavía.
+}
 
 function BusinessCatalog({ id }: { id: number }) {
   const { state, retry } = useCatalog(id)
@@ -30,9 +41,21 @@ export default function SalesPage() {
   return (
     <section aria-labelledby="sales-title">
       <h1 id="sales-title">Caja</h1>
-      {businessId === null || apiUrl === null
-        ? <CatalogFeedback error>El catálogo no está disponible porque falta completar una configuración de conexión válida.</CatalogFeedback>
-        : <BusinessCatalog key={businessId} id={businessId} />}
+      <div className={styles.layout}>
+        <div className={styles.catalog}>
+          {businessId === null || apiUrl === null
+            ? <CatalogFeedback error>El catálogo no está disponible porque falta completar una configuración de conexión válida.</CatalogFeedback>
+            : <BusinessCatalog key={businessId} id={businessId} />}
+        </div>
+        <CurrentOrderPanel
+          items={emptyOrder}
+          onIncrease={noop}
+          onDecrease={noop}
+          onRemove={noop}
+          onClear={noop}
+          onConfirm={noop}
+        />
+      </div>
     </section>
   )
 }

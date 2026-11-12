@@ -1,0 +1,21 @@
+.layout {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  align-items: start;
+}
+
+.catalog {
+  min-width: 0;
+}
+
+/* El CatalogBrowser ya trae su propio margen superior: se lo saco acá para alinear con el panel. */
+.catalog > * {
+  margin-top: 0;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+}
