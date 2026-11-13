@@ -28,6 +28,14 @@ type ProductVariantRow = {
     updated_at: Date;
 };
 
+export type OrderableVariant = {
+    id: number;
+    productName: string;
+    variantName: string;
+    priceCents: number;
+    active: boolean;
+};
+
 const COLUMNS =
     "id, business_id, product_id, name, price_cents, active, sort_order, created_at, updated_at";
 
@@ -166,13 +174,53 @@ export function createProductVariantRepository(db: Queryable) {
 
         return rows[0] ? toProductVariant(rows[0]) : null;
     }
+    async function findOrderableByIds(
+        businessId: number,
+        variantIds: number[],
+    ): Promise<OrderableVariant[]> {
+        if (variantIds.length === 0) {
+            return [];
+        }
 
+        const { rows } = await db.query<{
+            id: number;
+            product_name: string;
+            variant_name: string;
+            price_cents: number;
+            active: boolean;
+        }>(
+            `
+    SELECT
+      pv.id,
+      p.name AS product_name,
+      pv.name AS variant_name,
+      pv.price_cents,
+      (pv.active AND p.active) AS active
+    FROM product_variant pv
+    INNER JOIN product p
+      ON p.business_id = pv.business_id
+      AND p.id = pv.product_id
+    WHERE pv.business_id = $1
+      AND pv.id = ANY($2::int[])
+    `,
+            [businessId, variantIds],
+        );
+
+        return rows.map((row) => ({
+            id: row.id,
+            productName: row.product_name,
+            variantName: row.variant_name,
+            priceCents: row.price_cents,
+            active: row.active,
+        }));
+    }
     return {
-        list,
-        findById,
-        create,
-        update,
-    };
+    list,
+    findById,
+    findOrderableByIds,
+    create,
+    update,
+};
 }
 
 export type ProductVariantRepository = ReturnType<
