@@ -46,7 +46,12 @@ una moneda que el contrato no especifica.
 La navegación usa `/caja` con parámetros `categoria`, `producto` y `variante`.
 Permite volver con los enlaces del catálogo o el historial del navegador.
 Cada selección se valida contra los datos del negocio; cambiar de categoría o
-producto elimina las selecciones dependientes. No crea pedidos ni agrega un carrito.
+producto elimina las selecciones dependientes.
+
+Además, el flujo de caja gestiona un pedido actual con carrito local: agrega,
+actualiza cantidades, elimina ítems y confirma el pedido enviando la solicitud
+`POST /api/businesses/:businessId/orders` con únicamente `variantId` y `quantity`.
+El backend es responsable de validar variantes y recalcular el total final.
 
 Verificación manual con un negocio configurado:
 

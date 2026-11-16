@@ -1,0 +1,42 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  color: var(--color-text);
+  transition: background-color var(--transition-fast);
+}
+
+.button:first-child {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.button:last-child {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-primary-soft);
+}
+
+.button:disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.value {
+  min-width: 2.5rem;
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,20 @@
+.layout {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  align-items: start;
+}
+
+.catalog {
+  min-width: 0;
+}
+
+.catalog > * {
+  margin-top: 0;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+}
