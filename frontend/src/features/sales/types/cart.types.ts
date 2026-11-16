@@ -1,6 +1,6 @@
 // Ítem del pedido actual (carrito) de Caja.
-// unitPriceCents es solo para mostrar en pantalla: al confirmar el pedido se envían
-// únicamente variantId y quantity, y el backend vuelve a consultar el precio real.
+// unitPriceCents se usa solo para mostrar el subtotal en la UI; el backend
+// revalida el precio real al confirmar el pedido.
 export type CartItem = {
   variantId: number
   quantity: number

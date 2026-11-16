@@ -49,3 +49,8 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+.remove:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

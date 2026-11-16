@@ -2,7 +2,6 @@ import styles from './QuantityStepper.module.css'
 
 type Props = {
   quantity: number
-  // Texto que identifica el ítem, para los lectores de pantalla (ej: "Pollo a la parrilla, Entero").
   itemLabel: string
   onIncrease: () => void
   onDecrease: () => void
@@ -10,7 +9,6 @@ type Props = {
 }
 
 export default function QuantityStepper({ quantity, itemLabel, onIncrease, onDecrease, disabled = false }: Props) {
-  // Con cantidad 1, restar elimina el ítem (lo decide quien maneja el estado del pedido).
   const removesItem = quantity <= 1
 
   return (

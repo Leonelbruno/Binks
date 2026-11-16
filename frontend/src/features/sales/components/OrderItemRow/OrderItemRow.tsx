@@ -8,11 +8,11 @@ type Props = {
   onIncrease: () => void
   onDecrease: () => void
   onRemove: () => void
+  disabled?: boolean
 }
 
-export default function OrderItemRow({ item, onIncrease, onDecrease, onRemove }: Props) {
+export default function OrderItemRow({ item, onIncrease, onDecrease, onRemove, disabled = false }: Props) {
   const label = `${item.productName}, ${item.variantName}`
-  // Subtotal solo para mostrar: el precio real lo calcula el backend al confirmar.
   const subtotalCents = item.unitPriceCents * item.quantity
 
   return (
@@ -28,10 +28,11 @@ export default function OrderItemRow({ item, onIncrease, onDecrease, onRemove }:
           itemLabel={label}
           onIncrease={onIncrease}
           onDecrease={onDecrease}
+          disabled={disabled}
         />
       </div>
       <span className={styles.subtotal}>$ {formatPrice(subtotalCents)}</span>
-      <button type="button" className={styles.remove} onClick={onRemove} aria-label={`Quitar ${label} del pedido`}>
+      <button type="button" className={styles.remove} onClick={onRemove} aria-label={`Quitar ${label} del pedido`} disabled={disabled}>
         Quitar
       </button>
     </li>

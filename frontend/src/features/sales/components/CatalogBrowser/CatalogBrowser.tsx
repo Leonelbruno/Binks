@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import type { Catalog } from '../../types/catalog.types'
 import CatalogFeedback from '../CatalogFeedback/CatalogFeedback'
@@ -9,8 +9,22 @@ const priceFormatter = new Intl.NumberFormat('es-AR', {
   maximumFractionDigits: 2,
 })
 
-export default function CatalogBrowser({ catalog }: { catalog: Catalog }) {
+type CartVariantAction = {
+  variantId: number
+  quantity: number
+  productName: string
+  variantName: string
+  unitPriceCents: number
+}
+
+type Props = {
+  catalog: Catalog
+  onAddVariant?: (item: CartVariantAction) => void
+}
+
+export default function CatalogBrowser({ catalog, onAddVariant }: Props) {
   const [params, setParams] = useSearchParams()
+  const [addMessage, setAddMessage] = useState<string | null>(null)
   const category = catalog.categories.find((item) => String(item.id) === params.get('categoria'))
   const product = category?.products.find((item) => String(item.id) === params.get('producto'))
   const variant = product?.variants.find((item) => String(item.id) === params.get('variante'))
@@ -21,6 +35,15 @@ export default function CatalogBrowser({ catalog }: { catalog: Catalog }) {
   useEffect(() => {
     heading.current?.focus()
   }, [categoryId, productId])
+
+  useEffect(() => {
+    if (!addMessage) {
+      return undefined
+    }
+
+    const timeout = window.setTimeout(() => setAddMessage(null), 2500)
+    return () => window.clearTimeout(timeout)
+  }, [addMessage])
 
   function destination(categoryId?: number, productId?: number, variantId?: number) {
     const next = new URLSearchParams(params)
@@ -37,11 +60,25 @@ export default function CatalogBrowser({ catalog }: { catalog: Catalog }) {
     setParams(destination(category.id, product.id, id).search, { replace: true, preventScrollReset: true })
   }
 
+  function handleAddVariant() {
+    if (!onAddVariant || !category || !product || !variant) {
+      return
+    }
+
+    onAddVariant({
+      variantId: variant.id,
+      quantity: 1,
+      productName: product.name,
+      variantName: variant.name,
+      unitPriceCents: variant.priceCents,
+    })
+    setAddMessage(`Se agregó ${product.name} — ${variant.name} al pedido.`)
+  }
+
   if (catalog.categories.length === 0) {
     return <CatalogFeedback>No hay productos disponibles en el catálogo.</CatalogFeedback>
   }
 
-  // Los IDs se resuelven siempre contra el catálogo del negocio actual.
   const invalidSelection =
     (params.has('categoria') && !category) ||
     (params.has('producto') && !product) ||
@@ -118,7 +155,15 @@ export default function CatalogBrowser({ catalog }: { catalog: Catalog }) {
               ))}
             </fieldset>}
           <div role="status" aria-live="polite" aria-atomic="true">
-            {variant && <p>Seleccionado: <strong>{product.name} — {variant.name}</strong>. Precio: {priceFormatter.format(variant.priceCents / 100)}</p>}
+            {variant && (
+              <>
+                <p>Seleccionado: <strong>{product.name} — {variant.name}</strong>. Precio: {priceFormatter.format(variant.priceCents / 100)}</p>
+                {onAddVariant && (
+                  <button type="button" onClick={handleAddVariant}>Agregar al pedido</button>
+                )}
+              </>
+            )}
+            {addMessage && <p>{addMessage}</p>}
           </div>
         </>
       )}

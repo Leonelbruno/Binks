@@ -10,7 +10,6 @@ type Props = {
   onRemove: (variantId: number) => void
   onClear: () => void
   onConfirm: () => void
-  // Mientras se envía el pedido, se bloquean las acciones.
   isConfirming?: boolean
 }
 
@@ -24,7 +23,6 @@ export default function CurrentOrderPanel({
   isConfirming = false,
 }: Props) {
   const isEmpty = items.length === 0
-  // Total solo para mostrar: el precio real lo calcula el backend al confirmar.
   const totalCents = items.reduce((sum, item) => sum + item.unitPriceCents * item.quantity, 0)
 
   return (
@@ -42,6 +40,7 @@ export default function CurrentOrderPanel({
               onIncrease={() => onIncrease(item.variantId)}
               onDecrease={() => onDecrease(item.variantId)}
               onRemove={() => onRemove(item.variantId)}
+              disabled={isConfirming}
             />
           ))}
         </ul>

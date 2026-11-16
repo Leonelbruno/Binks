@@ -9,7 +9,6 @@
   min-width: 0;
 }
 
-/* El CatalogBrowser ya trae su propio margen superior: se lo saco acá para alinear con el panel. */
 .catalog > * {
   margin-top: 0;
 }
